@@ -1,21 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: seq
+  name: myapp-argo-application
   namespace: argocd
 spec:
   project: default
+
   source:
-    repoURL: https://helm.datalust.co
-    chart: seq
-    targetRevision: 2023.4.0 # Replace with desired version
-    helm:
-      valueFiles:
-        - values.yaml # Ensure this is relative to the repository's root
-  destination:
+    repoURL: https://github.com/ShalevNatan/argocdTest.git
+    targetRevision: HEAD
+    path: dev
+  destination: 
     server: https://kubernetes.default.svc
-    namespace: seq
+    namespace: argocd
+
   syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
     automated:
-      prune: true
       selfHeal: true
+      prune: true
