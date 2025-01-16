@@ -1,0 +1,15 @@
+trigger:
+- main
+
+jobs:
+- job: RunOnEC2
+  displayName: "SSH into EC2 and echo Hello"
+  pool:
+    vmImage: 'ubuntu-latest'  # Use any image with SSH support
+  steps:
+  - task: SSH@0
+    inputs:
+      sshEndpoint: 'AWS-EC2-Ansible'  # Service connection name
+      runOptions: inline
+      script: |
+        echo "hello world" >> /home/ansible_user/file1.txt
