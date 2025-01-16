@@ -1,0 +1,12 @@
+jobs:
+- job: RunOnEC2
+  displayName: "SSH into EC2 and echo Hello"
+  pool:
+    name: "AnsibleAgent"  # Use the name of your self-hosted pool
+  steps:
+- task: SSH@0
+  inputs:
+    sshEndpoint: 'AWS-EC2-Ansible'
+    runOptions: inline
+    script: |
+      echo "hello world" >> /home/ansible_user/file1.txt
